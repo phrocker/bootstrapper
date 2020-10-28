@@ -15,9 +15,16 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+#!/bin/bash
 
 script_directory="$(cd "$(dirname "$0")" && pwd)"
 
-git clone https://github.com/phrocker/bootstrapper.git
+FOLDER="bstrp"
 
-./bootstrapper/bootstrap.sh
+if [ ! -d "$FOLDER" ] ; then
+    git clone https://github.com/phrocker/bootstrapper.git $FOLDER
+fi
+
+cp features.list ./$FOLDER 2>/dev/null
+
+./$FOLDER/bootstrap.sh
