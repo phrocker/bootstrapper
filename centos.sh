@@ -20,21 +20,7 @@ verify_enable() {
     feature="$1"
     feature_status=${!1}
     if [ "$OS_MAJOR" = "6" ]; then
-        if [ "$feature" = "GPS_ENABLED" ]; then
-            echo "false"
-        elif [ "$feature" = "USB_ENABLED" ]; then
-            echo "false"
-        elif [ "$feature" = "TENSORFLOW_ENABLED" ]; then
-            echo "false"
-        else
-            verify_gcc_enable $feature
-        fi
-    else
-        if [ "$feature" = "USB_ENABLED" ]; then
-            echo "false"
-        else
-            verify_gcc_enable $feature
-        fi
+        verify_gcc_enable $feature
     fi
 }
 
