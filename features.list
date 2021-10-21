@@ -11,7 +11,7 @@ BUILD_TESTS_default=TRUE
 option.name=PYTHON_ITERATOR_SUPPORT
 PYTHON_ITERATOR_SUPPORT_description=Build Python Iterators
 PYTHON_ITERATOR_SUPPORT_default=TRUE
-PYTHON_ITERATOR_SUPPORT_dependencies=autoconf,automake,libtool,autotool,libevent-dev,unzip
+PYTHON_ITERATOR_SUPPORT_dependencies=autoconf,automake,libtool,autotool,libevent-dev,unzip,openjdk-11-jdk
 ################
 option.name=NATIVE_ARCH
 NATIVE_ARCH_description=Build Native Extensions

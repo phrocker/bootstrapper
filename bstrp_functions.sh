@@ -50,7 +50,14 @@ add_disabled_option(){
 }
 
 add_dependency(){
-  DEPENDENCIES+=("$1:$2")
+  if [ $# -eq 0 ]
+  then 
+    echo "Blah " > /dev/null
+  else
+    if [ ! -z "$2" ]; then
+      DEPENDENCIES+=("$1:$2")
+    fi
+  fi
 }
 
 ### parse the command line arguments
@@ -71,23 +78,26 @@ pause(){
 }
 
 load_options() {
+  
   input="${script_directory}/features.list"
   LINEMAP=()
-  while IFS= read -r line
+  #while IFS="" read -r p || [ -n "$p" ]
+  while IFS= read -r line || [[ $line ]]; 
   do
-    if ! [[ "$line" =~ ^#.* ]]; then
+    if ! [[ "$line" =~ ^[[:space:]]*\# ]]; then
       ## option.name will be the 
       if [[ "$line" =~ ^option.name=.* ]]; then
-        VARIABLE=`echo $line | cut -d '=' -f 2`
+        VARIABLE=`echo "$line" | cut -d '=' -f 2`
         OPTION_DESCRIPTIONS+=("${VARIABLE}")
       else
-        VAR=`echo $line | cut -d '=' -f 1`
-        VAL=`echo $line | cut -d '=' -f 2`
+        VAR=`echo "$line" | cut -d '=' -f 1`
+        VAL=`echo "$line" | cut -d '=' -f 2`
         eval "${VAR}=\"${VAL}\""
       fi
     fi
-  done < "$input"
+  done  < "$input"
   for option in "${OPTION_DESCRIPTIONS[@]}" ; do
+
     OPT=${option%%:*}
     DEFAULT_NAME="${OPT}_default"
     DEP_NAME="${OPT}_dependencies"
@@ -98,9 +108,12 @@ load_options() {
     else
       add_disabled_option $OPT ${FALSE} "$OPT"
     fi  
-    echo $DEP_V | sed -n 1'p' | tr ',' '\n' | while read dependency; do
-      add_dependency $OPT "$dependency"
-    done
+    while read dependency; do
+      if [ ! -z "$dependency" ]; then
+        add_dependency $OPT "$dependency"
+      fi
+    done < <(echo $DEP_V | sed -n 1'p' | tr ',' '\n')
+
   done
 }
 
