@@ -125,6 +125,8 @@ build_deps(){
                         install_libusb
                     elif [ "$FOUND_VALUE" = "libboost-all-dev" ]; then
                         install_libboost
+                    elif [ "$FOUND_VALUE" = "python-devel" ]; then
+                        INSTALLED+=("python-devel")
                     elif [ "$FOUND_VALUE" = "libpng" ]; then
                         INSTALLED+=("libpng-devel")
                     elif [ "$FOUND_VALUE" = "bison" ]; then
