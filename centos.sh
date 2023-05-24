@@ -73,7 +73,12 @@ install_libusb() {
 
 }
 
-
+#libboost-all-dev
+install_libboost() {
+    INSTALLED+=("boost boost-thread")
+    INSTALLED+=("boost-thread")
+    INSTALLED+=("boost-devel")
+}
 
 bootstrap_cmake(){
     sudo yum -y install wget
@@ -118,6 +123,8 @@ build_deps(){
                         INSTALLED+=("openssl-static")
                     elif [ "$FOUND_VALUE" = "libusb" ]; then
                         install_libusb
+                    elif [ "$FOUND_VALUE" = "libboost-all-dev" ]; then
+                        install_libboost
                     elif [ "$FOUND_VALUE" = "libpng" ]; then
                         INSTALLED+=("libpng-devel")
                     elif [ "$FOUND_VALUE" = "bison" ]; then

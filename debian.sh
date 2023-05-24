@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -27,6 +27,12 @@ add_os_flags() {
 bootstrap_cmake(){
   sudo apt-get -y install cmake
 }
+
+#libboost-all-dev
+install_libboost() {
+    INSTALLED+=("libboost-all-dev")
+}
+
 build_deps(){
   sudo apt-get -y update
   ## need to account for debian
@@ -59,6 +65,8 @@ build_deps(){
           elif [ "$FOUND_VALUE" = "libusb" ]; then
             INSTALLED+=("libusb-1.0-0-dev")
             INSTALLED+=("libusb-dev")
+          elif [ "$FOUND_VALUE" = "libboost-all-dev" ]; then
+            install_libboost
           elif [ "$FOUND_VALUE" = "libpng" ]; then
             INSTALLED+=("libpng-dev")
           elif [ "$FOUND_VALUE" = "bison" ]; then
